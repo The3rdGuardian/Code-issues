@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class PlayerControl : MonoBehaviour
 {
 
-    public float speed; 
-    
-    public Text countText;
+    public float speed;
+
     public Text livesText;
+    public Text countText;
+
 
     public Text winText;
     public Text winText2;
-    public Text winText3;
     public Text loseText;
 
     private Rigidbody2D rb2d;      
@@ -30,7 +30,6 @@ public class PlayerControl : MonoBehaviour
 
         winText.text = "";
         winText2.text = "";
-        winText3.text = "";
         loseText.text = "";
 
         SetLivesText();
@@ -46,16 +45,14 @@ public class PlayerControl : MonoBehaviour
         Vector2 movement = new Vector2(moveHorizontal, moveVertical);
         rb2d.AddForce(movement * speed);
 
+        
+        SetLivesText();
 
-        if (Input.GetKey("escape"))
-        {
-            Application.Quit();
-        }
-           
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        
         if (other.gameObject.CompareTag("Pentagon"))
         {
             other.gameObject.SetActive(false);
@@ -63,23 +60,28 @@ public class PlayerControl : MonoBehaviour
             SetCountText();
         }
 
-        if(other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
+            other.gameObject.SetActive(false);
             lives--;
             SetLivesText();
-            
+
+        }
+        if (count == 6 && lives >= 1)
+        {
+            transform.position = new Vector2(66f, 0f);
         }
 
-           
     }
 
     void SetLivesText()
     {
-        livesText.text = "Lives: " + count.ToString();
+        livesText.text = "Lives: " + lives.ToString();
        
         if (lives < 1)
         {
             loseText.text = "You have lost the game! Better luck next time!";
+            StopGameObject();
         }
     }
 
@@ -88,11 +90,10 @@ public class PlayerControl : MonoBehaviour
         countText.text = "Count: " + count.ToString();
         
 
-        if (lives >= 1)
+        if (lives >= 1 && count == 14)
         {
             winText.text = "Congragulations! You Win!";
             winText2.text = "Game created by Edward Powers";
-            winText3.text = "Challenge 1: UFO";
         }
         else
         {
@@ -101,6 +102,15 @@ public class PlayerControl : MonoBehaviour
 
        
     }
-          
+
+    void StopGameObject()
+    {
+        //Destroy(gameObject);
+        float moveHorizontal = 0;
+        float moveVertical = 0;
+        Vector2 movement = new Vector2(moveHorizontal, moveVertical);
+
+    }
+
 }
 
