@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     public AudioClip musicCliptwo;
     public AudioSource musicSource;
 
+    public CountdownScript Timer;
+
     private int scoreValue;
     private int lives;
 
@@ -44,6 +46,7 @@ public class Player : MonoBehaviour
         musicSource.Play();
         anim = GetComponent<Animator>();
         gameObject.GetComponent<Renderer>().enabled = true;
+        //Timer = Timer.GetComponent<CountdownScript.startingTime>();
     }
 
     void Update()
@@ -141,7 +144,7 @@ public class Player : MonoBehaviour
         //CountdownScript.startingTime;
         livesText.text = "Lives: " + lives.ToString();
 
-        if (lives < 1)
+        if (lives < 1 /*|| CountdownScript.startingTime == 0*/)
         {
             loseText.text = "You have lost the game! Better luck next time!";
             gameObject.GetComponent<Renderer>().enabled = false;
