@@ -161,7 +161,7 @@ public class Player : MonoBehaviour
             musicSource.clip = musicCliptwo;
             musicSource.Play();
             winText.text = "Congratulations! You Win!";
-            winText2.text = "Game created by Edward Powers";
+            winText2.text = "Game created by";
             gameObject.GetComponent<Renderer>().enabled = false;
             rd2d.bodyType = RigidbodyType2D.Static;
         }
